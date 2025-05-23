@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\PageController;
 
 // Authentication Routes
 Route::middleware('guest')->group(function () {
@@ -17,20 +18,20 @@ Route::middleware('guest')->group(function () {
 
 // Authenticated Routes
 Route::middleware('auth')->group(function () {
-    Route::get('/index', function () {
-        return view('index');
-    })->name('index');
+    Route::get('/dashboard', function () {
+        return view('page.dashboard');
+    })->name('dashboard');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
 // Public Page Routes
 Route::get('/', function () {
-    return view('index');
+    return view('page.home');
 })->name('home');
 
 Route::get('/about', function () {
-    return view('about');
+    return view('page.about');
 })->name('about');
 
 Route::get('/services', function () {
@@ -66,7 +67,7 @@ Route::get('/services', function () {
         ],
     ];
 
-    return view('services', compact('services', 'testimonials'));
+    return view('page.services', ['services' => $services]);
 })->name('services');
 
 Route::get('/packages', function () {
@@ -97,34 +98,34 @@ Route::get('/packages', function () {
         ]
     ];
 
-    return view('packages', compact('packages'));
+    return view('page.packages', compact('packages'));
 })->name('packages');
 
 Route::get('/destination', function () {
-    return view('destination');
+    return view('page.destination');
 })->name('destination');
 
 Route::get('/booking', function () {
-    return view('booking');
+    return view('page.booking');
 })->name('booking');
 Route::post('/booking/submit', [BookingController::class, 'submit'])->name('booking.submit');
 
 
 // Changed from 'team' to 'guides' to match your Blade template
 Route::get('/team', function () {
-    return view('team'); // Make sure you have team.blade.php
+    return view('page.team'); // Make sure you have team.blade.php
 })->name('team');
 
 // Changed from 'testimonial' to 'testimonials' to match your Blade template
 Route::get('/testimonials', function () {
-    return view('testimonials'); // Make sure you have testimonial.blade.php
+    return view('page.testimonials'); // Make sure you have testimonial.blade.php
 })->name('testimonials');
 
 // Added 404 route that was missing
 Route::get('/404', function () {
-    return view('404'); // Make sure you create 404.blade.php
+    return view('page.404'); // Make sure you create 404.blade.php
 })->name('not-found');
 
 Route::get('/contact', function () {
-    return view('contact');
+    return view('page.contact');
 })->name('contact');
